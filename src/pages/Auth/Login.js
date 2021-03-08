@@ -3,6 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms/user';
 import axios from 'axios'
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import { errorModalState, errorState } from '../../store/atoms/atoms';
 
 
 function Login() {
@@ -12,7 +14,8 @@ function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [auth, setAuth] = useState(true);
-
+    const [error, setError] = useRecoilState(errorState);
+    const [errorModal, setErrorModal] = useRecoilState(errorModalState);
     const handleAuth = () => {
         setAuth(!auth);
     }
@@ -27,7 +30,8 @@ function Login() {
         .then(res=>{
             console.log(res);
             if(res.data.status === false){
-
+                setError(res.data.message);
+                setErrorModal(true);
             }
             else{
                 localStorage.setItem('userId',res.data.userId)
@@ -55,7 +59,8 @@ function Login() {
         .then(res=>{
             console.log(res);
             if(res.data.status === false){
-
+                setError(res.data.message);
+                setErrorModal(true);
             }
             else{
                 localStorage.setItem('userId',res.data.userId)

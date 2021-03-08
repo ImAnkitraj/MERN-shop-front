@@ -1,18 +1,42 @@
+import axios from 'axios';
 import React, { useState } from 'react'
-import { Link, NavLink} from 'react-router-dom'
+import { Link, NavLink, useHistory} from 'react-router-dom'
 import { useRecoilState } from 'recoil';
-import { detailModalState } from '../../store/atoms/atoms';
+import { detailModalState, errorModalState, productsState } from '../../store/atoms/atoms';
 import { userState } from '../../store/atoms/user';
 import DetailModal from '../DetailModal/DetailModal';
+import ErrorModal from '../ErrorModal/ErrorModal';
 
 function Header() {
+
+    const history = useHistory();
+    const [,setProducts] = useRecoilState(productsState)
     const [searchBox, setSearchBox] = useState(false);
     const [searchText, setSearchText] = useState();
     const [user, setUser] = useRecoilState(userState);
-    const [detailModal, setDetailModal] = useRecoilState(detailModalState)
+    const [detailModal, ] = useRecoilState(detailModalState)
+    const [errorModal, ] = useRecoilState(errorModalState)
     const logout = () =>{
         setUser(undefined);
         localStorage.removeItem('user')
+    }
+
+    const search = (e) => {
+        console.log(searchText)
+        e.preventDefault();
+        axios.post('http://localhost:3001/search',{
+                "searchItem":searchText,
+        })
+        .then((res)=>{
+            console.log(res.data)
+            setProducts([...res.data])
+            setSearchBox(false);
+        })
+        .catch((err)=>{
+            console.log(err)
+            setSearchBox(false);
+        })
+        history.push('/shop')
     }
     return (
     <>
@@ -56,7 +80,7 @@ function Header() {
             searchBox && (
                 <div className="search_input" id="search_input_box">
                     <div className="container">
-                        <form className="d-flex justify-content-between">
+                        <form onSubmit={search} className="d-flex justify-content-between">
                             <input onChange={(e)=>setSearchText(e.target.value)} value={searchText} type="text" className="form-control" id="search_input" placeholder="Search Here"/>
                             <button type="submit" className="btn"></button>
                             <span onClick={()=>setSearchBox(false)} className="lnr lnr-cross" id="close_search" title="Close Search"></span>
@@ -66,6 +90,7 @@ function Header() {
             )
         }
     {detailModal && <DetailModal/>}
+    {errorModal && <ErrorModal/>}
     </header>
     </>
     )

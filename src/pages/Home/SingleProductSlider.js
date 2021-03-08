@@ -1,15 +1,12 @@
 import axios from 'axios';
 import React,{useEffect, useState} from 'react'
+import { useRecoilState } from 'recoil';
 import SingleProduct from '../../components/SingleProduct/SingleProduct'
-
+import {productType} from '../../store/atoms/atoms'
 function SingleProductSlider({title, subtitle}) {
 
-    
-	const [type,setType] = useState();
+	const [type,setType] = useRecoilState(productType);
     const [products,setProducts] = useState([])
-
-    const token = localStorage.getItem('user')?.token
-    
 	useEffect(() => {
 		console.log('useEffect')
 		axios.post('http://localhost:3001/products',{

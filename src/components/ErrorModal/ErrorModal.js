@@ -1,45 +1,50 @@
 import { Modal } from '@material-ui/core'
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import { detailModalState } from '../../store/atoms/atoms'
-import './DetailModal.css'
 import { makeStyles } from '@material-ui/core/styles';
-import { Link, useHistory } from 'react-router-dom'
+import { errorModalState, errorState } from '../../store/atoms/atoms';
 
 const useStyles = makeStyles((theme) => ({
-
     modal: {
+      marginTop:'1rem',
       display: 'flex',
-      alignItems: 'center',
       justifyContent: 'center',
     },
     paper: {
-      width: '80%',
+      width:'15%',
+      height: '20%',
+      display:'flex',
       borderRadius:'4px',
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #ffba0070',
-      paddingLeft:0
+      padding: '1rem',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
 }));
 function ErrorModal() {
-    const history = useHistory();
-    const classes = useStyles();
-    const [detailModal, setDetailModal] = useRecoilState(detailModalState)
-    const handleClose = () => {
-        setDetailModal(false);
-    }
 
+    const classes = useStyles();
+    const [errorModal,setErrorModal ] = useRecoilState(errorModalState);
+    const [error,] = useRecoilState(errorState);
+
+    const handleClose = () => {
+        setErrorModal(false);
+    }
     return (
         <Modal
-        open={detailModal}
+        open={errorModal}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         className={`${classes.modal} animate__animated animate__bounce`}
         >
             <div className={`${classes.paper} animate__animated animate__fadeIn`}>
-                <div className="container" style={{marginLeft:0, paddingLeft:0}}>
-                    error
+                <div className="container" style={{alignItems: 'center'}}>
+                    <center>
+                        <h3>Alert !!</h3>
+                        <h4>{error}</h4>
+                    </center>
                 </div>
             </div>
         </Modal>

@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import Loading from '../../components/Loading/Loading'
+import { productsState, productType } from '../../store/atoms/atoms'
 
 const Filterbar = lazy(()=>import( './Filterbar'))
 const SidebarCategory = lazy(()=>import( './SidebarCategory'))
@@ -12,8 +14,8 @@ const SingleProduct = lazy(()=>import( '../../components/SingleProduct/SinglePro
 
 function Category() {
 
-	const [type,setType] = useState();
-	const [products,setProducts] = useState([])
+	const [type,setType] = useRecoilState(productType);
+	const [products,setProducts] = useRecoilState(productsState)
 	useEffect(() => {
 		axios.post('http://localhost:3001/products',{
             "type":type
@@ -44,54 +46,37 @@ function Category() {
             </div>
         </section>
         <div className="container">
-		<div className="row">
-			<Suspense fallback={<Loading/>}>
-				<div className="col-xl-3 col-lg-4 col-md-5">
-					<SidebarCategory type={type} setType={setType}/>
-					{/* <SidebarFilter/> */}
-				</div>
-				<div className="col-xl-9 col-lg-8 col-md-7">
-					{/* <Filterbar/> */}
-					<section className="lattest-product-area pb-40 category-list">
-						<div className="row">
-							{
-								products.length < 1 ?(<>No Product</>):(
-									
-									products.map((prod)=>
-										<div className="col-lg-4 col-md-6">
-											<SingleProduct type={prod.type} id={prod._id} description={prod.description} title={prod.title} Aprice={prod.Aprice} Dprice={prod.Dprice} img={prod.img}/>
-										</div>
-									)
-									
-								)
-							}
-							
-						</div>
-					</section>
-					{/* <!-- End Best Seller --> */}
-					{/* <!-- Start Filter Bar --> */}
-					<div className="filter-bar d-flex flex-wrap align-items-center">
-						<div className="sorting mr-auto">
-							<select>
-								<option value="1">Show 12</option>
-								<option value="1">Show 12</option>
-								<option value="1">Show 12</option>
-							</select>
-						</div>
-						<div className="pagination">
-							<Link to ='/shop' className="prev-arrow"><i className="fa fa-long-arrow-left" aria-hidden="true"></i></Link>
-							<Link to ='/shop' className="active">1</Link>
-							<Link to ='/shop'>2</Link>
-							<Link to ='/shop'>3</Link>
-							<Link to ='/shop' className="dot-dot"><i className="fa fa-ellipsis-h" aria-hidden="true"></i></Link>
-							<Link to ='/shop'>6</Link>
-							<Link to ='/shop' className="next-arrow"><i className="fa fa-long-arrow-right" aria-hidden="true"></i></Link>
-						</div>
+			<div className="row">
+				<Suspense fallback={<Loading/>}>
+					<div className="col-xl-3 col-lg-4 col-md-5">
+						<SidebarCategory type={type} setType={setType}/>
 					</div>
-				</div>
-			</Suspense>
+					<div className="col-xl-9 col-lg-8 col-md-7">
+						<section className="lattest-product-area pb-40 category-list">
+							<div className="row">
+								{
+									products.length < 1 ?(<div className='container' style={{
+										color:'gray',
+										display:'flex',
+										alignItems:'center',
+										justifyContent:'center',
+										marginTop:'4rem'
+									}}><h1>No Products found</h1></div>):(
+										
+										products.map((prod)=>
+											<div className="col-lg-4 col-md-6">
+												<SingleProduct type={prod.type} id={prod._id} description={prod.description} title={prod.title} Aprice={prod.Aprice} Dprice={prod.Dprice} img={prod.img}/>
+											</div>
+										)
+										
+									)
+								}
+							</div>
+						</section>
+					</div>
+				</Suspense>
+			</div>
 		</div>
-	</div>
     </>
     )
 }

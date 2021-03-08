@@ -1,12 +1,29 @@
+import axios from 'axios'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import { productState } from '../../store/atoms/atoms'
 
 function Checkout() {
 
     const history  =  useHistory()
+    const [product,] = useRecoilState(productState)
+
     const handleOrder = () => {
-        history.push('/confirmation')
+        axios.post('http://localhost:3001/order/add',{
+            "userId":localStorage.getItem('userId'),
+            "id":product?.id
+        })
+        .then((res)=>{
+            console.log(res)
+            localStorage.setItem('user',JSON.stringify(res.data));
+            history.push('/confirmation')
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
+    
     return (
     <>
         <section className="banner-area organic-breadcrumb">

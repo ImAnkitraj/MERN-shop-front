@@ -64,19 +64,8 @@ function DetailModal() {
         console.log(product)
         // console.log(JSON.parse(localStorage.getItem('user')))
         if(localStorage.getItem('user')){
-            axios.post('http://localhost:3001/order/add',{
-                "userId":localStorage.getItem('userId'),
-                "id":product?.id
-            })
-            .then((res)=>{
-                console.log(res)
-                localStorage.setItem('user',JSON.stringify(res.data));
-                setDetailModal(false);
-            })
-            .catch((err)=>{
-                console.log(err)
-                setDetailModal(false);
-            })
+            setDetailModal(false);
+            history.push('/checkout')
         }
         else{
             setDetailModal(false);
