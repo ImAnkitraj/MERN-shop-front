@@ -18,7 +18,7 @@ function Header() {
     const [errorModal, ] = useRecoilState(errorModalState)
     const logout = () =>{
         setUser(undefined);
-        localStorage.removeItem('user')
+        localStorage.clear();
     }
 
     const search = (e) => {

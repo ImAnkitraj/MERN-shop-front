@@ -6,11 +6,16 @@ import {productType} from '../../store/atoms/atoms'
 function SingleProductSlider({title, subtitle}) {
 
 	const [type,setType] = useRecoilState(productType);
+    const [offset, setOffset] = useState(0);
+    const [limit, setLimit] = useState(12);
+
     const [products,setProducts] = useState([])
 	useEffect(() => {
 		console.log('useEffect')
 		axios.post('http://localhost:3001/products',{
-			"type":type
+			"type":type,
+            "offset":offset,
+            "limit":limit,
         })
 		.then((res)=>{
 			// console.log(res);

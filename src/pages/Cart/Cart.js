@@ -20,6 +20,7 @@ function Cart() {
         var st = 0;
         local.cart.map(_=>{
             st+=_.Dprice;
+            return _
         })
         setSubTotal(st)
         setCartProduct([...local.cart])
@@ -144,7 +145,7 @@ function Cart() {
                                     <td>
                                         <div className="checkout_btn_inner d-flex align-items-center">
                                             <Link className="gray_btn">Continue Shopping</Link>
-                                            <Link className="primary-btn">Proceed to checkout</Link>
+                                            <Link to='/checkout' className="primary-btn">Proceed to checkout</Link>
                                         </div>
                                     </td>
                                 </tr>

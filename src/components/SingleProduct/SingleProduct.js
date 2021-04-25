@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { detailModalState, productState } from '../../store/atoms/atoms'
+import { detailModalState, errorModalState, errorState, productState } from '../../store/atoms/atoms'
 
 function SingleProduct({title, description, Aprice, Dprice, img, id ,type}) {
 
@@ -10,7 +10,8 @@ function SingleProduct({title, description, Aprice, Dprice, img, id ,type}) {
 
     const [detailModal, setDetailModal] = useRecoilState(detailModalState);
     const [product, setProduct] = useRecoilState(productState);
-
+    const [error, setError] = useRecoilState(errorState);
+    const [errorModal, setErrorModal] = useRecoilState(errorModalState);
     const handleProductDetail = () => {
         setProduct({
             type:type,
@@ -31,7 +32,9 @@ function SingleProduct({title, description, Aprice, Dprice, img, id ,type}) {
                 "id":id
             })
             .then((res)=>{
-                alert('added')
+                // alert('added')
+                setError('Added');
+                setErrorModal(true);
                 console.log('added',res)
                 localStorage.setItem('user',JSON.stringify(res.data));
             })

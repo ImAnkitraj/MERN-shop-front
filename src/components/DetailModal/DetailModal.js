@@ -99,14 +99,6 @@ function DetailModal() {
                                     <li><Link ><span>Availibility</span> : In Stock</Link></li>
                                 </ul>
                                 <p>{product?.description}</p>
-                                <div className="product_count">
-                                    <label for="qty">Quantity:</label>
-                                    <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" className="input-text qty"/>
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                    className="increase items-count" type="button"><i className="lnr lnr-chevron-up"></i></button>
-                                    <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                    className="reduced items-count" type="button"><i className="lnr lnr-chevron-down"></i></button>
-                                </div>
                                 <div className="card_area d-flex align-items-center" style={{marginBottom:'1rem'}}>
                                     <button onClick = {handleAddToCart} className="gray_btn" >Add to Cart</button>
                                     <button onClick = {handleOrder}className="primary-btn" >Order Now</button>

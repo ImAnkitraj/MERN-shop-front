@@ -54,7 +54,7 @@ function Home() {
             </section>
             <section className="active-product-area section_gap">
                 <SingleProductSlider title="Latest Products" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
-                <SingleProductSlider title="Coming Products" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+                {/* <SingleProductSlider title="Coming Products" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/> */}
             </section>
             <section className="exclusive-deal-area">
                 <div className="container-fluid">
