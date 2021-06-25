@@ -1,6 +1,8 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useRecoilState } from 'recoil';
 import Loading from '../../components/Loading/Loading';
+import { productIdsState } from '../../store/atoms/atoms';
 
 
 const CartProduct  = lazy(()=>import('./CartProduct'));
@@ -10,7 +12,7 @@ function Cart() {
     const [deliveryType , setDeliveryType] = useState(0);
     const [cartProduct, setCartProduct] = useState([])
     const [subTotal, setSubTotal] = useState(0)
-
+    const [_, setProductIds] = useRecoilState(productIdsState)
     const handleClick = (type) => {
         setDeliveryType(type);
     }
@@ -25,6 +27,10 @@ function Cart() {
         setSubTotal(st)
         setCartProduct([...local.cart])
     },[local])
+
+    const addToMyOrders = () => {
+        setProductIds([...cartProduct.map( _ => _._id)])
+    }   
     return (
     <>
         <section className="banner-area organic-breadcrumb">
@@ -145,7 +151,7 @@ function Cart() {
                                     <td>
                                         <div className="checkout_btn_inner d-flex align-items-center">
                                             <Link className="gray_btn">Continue Shopping</Link>
-                                            <Link to='/checkout' className="primary-btn">Proceed to checkout</Link>
+                                            <Link to='/checkout' onClick={addToMyOrders} className="primary-btn">Proceed to checkout</Link>
                                         </div>
                                     </td>
                                 </tr>

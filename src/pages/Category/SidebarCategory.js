@@ -32,12 +32,12 @@ const SingleCategory = ({title,types,type,setType}) => {
         setType(type.title)
     } 
     return (
-        <li class="main-nav-list"><Link class="border-bottom-0"  to='/shop' onClick={handleToggle}><span class="lnr lnr-arrow-right"></span>{title}<span class="number">(48)</span></Link>
+        <li class="main-nav-list"><Link class="border-bottom-0"  to='/shop' onClick={handleToggle}><span class="lnr lnr-arrow-right"></span>{title}<span class="number"></span></Link>
             { visible && (
                 <ul>
                     {
                         types.map(type => {
-                        return <li onClick = {()=>handleFilterType(type)} class="main-nav-list child"><Link >{type.title}<span class="number">(13)</span></Link></li>
+                        return <li onClick = {()=>handleFilterType(type)} class="main-nav-list child"><Link >{type.title}<span class="number"></span></Link></li>
                     
                         })
                     }

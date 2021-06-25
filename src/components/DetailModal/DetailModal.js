@@ -1,7 +1,7 @@
 import { Modal } from '@material-ui/core'
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import { detailModalState, productState } from '../../store/atoms/atoms'
+import { detailModalState, productIdsState, productState } from '../../store/atoms/atoms'
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 function DetailModal() {
 
     const [product,] = useRecoilState(productState)
-
+    const [productIds, setProductIds] = useRecoilState(productIdsState)
     const history = useHistory();
     const classes = useStyles();
     const [detailModal, setDetailModal] = useRecoilState(detailModalState)
@@ -62,6 +62,7 @@ function DetailModal() {
 
     const handleOrder = () =>{
         console.log(product)
+        setProductIds([product?.id])
         // console.log(JSON.parse(localStorage.getItem('user')))
         if(localStorage.getItem('user')){
             setDetailModal(false);

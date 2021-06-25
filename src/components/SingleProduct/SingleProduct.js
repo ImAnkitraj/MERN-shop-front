@@ -72,8 +72,8 @@ function SingleProduct({title, description, Aprice, Dprice, img, id ,type}) {
                         <span className="lnr lnr-sync"></span>
                         <p className="hover-text">compare</p>
                     </Link> */}
-                    <Link className="social-info">
-                        <span onClick={handleProductDetail}className="lnr lnr-move"></span>
+                    <Link onClick={handleProductDetail} className="social-info">
+                        <span className="lnr lnr-move"></span>
                         <p className="hover-text">view more</p>
                     </Link>
                 </div>

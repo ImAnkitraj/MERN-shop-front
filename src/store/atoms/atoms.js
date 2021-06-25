@@ -33,3 +33,8 @@ export const errorModalState = atom({
      key:'productType',
      default:''
  })
+
+ export const productIdsState = atom({
+     key:'productIds',
+     default:[]
+ })

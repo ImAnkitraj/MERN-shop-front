@@ -12,10 +12,11 @@ function Order() {
 
     const local = JSON.parse(localStorage.getItem('user'))
     useEffect(()=>{
-        // console.log('cart', local)
+        console.log('cart', local.order)
         var st = 0;
         local.order.map(_=>{
-            st+=_.Dprice;
+            console.log('product ordered',_)
+            return _
         })
         setSubTotal(st)
         setOrderProduct([...local.order])

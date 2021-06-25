@@ -2,17 +2,18 @@ import axios from 'axios'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { productState } from '../../store/atoms/atoms'
+import { productIdsState, productState } from '../../store/atoms/atoms'
 
 function Checkout() {
 
     const history  =  useHistory()
     const [product,] = useRecoilState(productState)
+    const [productIds, setProductIds] = useRecoilState(productIdsState);
 
     const handleOrder = () => {
         axios.post('http://localhost:3001/order/add',{
             "userId":localStorage.getItem('userId'),
-            "id":product?.id
+            "ids":[...productIds]
         })
         .then((res)=>{
             console.log(res)
